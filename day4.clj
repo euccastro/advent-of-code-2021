@@ -33,7 +33,6 @@
 
 (def input example-input)
 
-;; part 1
 
 (let [[draws & cards] (str/split input #"\R\R")]
   (def draws (parse-num-line draws))
@@ -59,14 +58,16 @@
 (defn sum-unmarked [tree]
   (apply + (filter some? (flatten tree))))
 
-(defn reduce-step [cards draw]
+;; part 1
+
+(defn reduce-step1 [cards draw]
   (let [new-cards (map #(mark % draw) cards)
         winning-card (first (filter bingo-card? new-cards))]
     (if winning-card
       (reduced (* draw (sum-unmarked winning-card)))
       new-cards)))
 
-(reduce reduce-step initial-cards draws)
+(reduce reduce-step1 initial-cards draws)
 ;; => 4512
 
 ;; part 2
@@ -74,9 +75,9 @@
 (defn reduce-step2 [cards draw]
   (let [marked-cards (map #(mark % draw) cards)
         new-cards (remove bingo-card? marked-cards)]
-    (if (seq new-cards)
-      new-cards
-      (reduced (* draw (sum-unmarked marked-cards))))))
+    (if (empty? new-cards)
+      (reduced (* draw (sum-unmarked marked-cards)))
+      new-cards)))
 
 (reduce reduce-step2 initial-cards draws)
 ;; => 1924
