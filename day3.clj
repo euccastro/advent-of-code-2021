@@ -42,9 +42,8 @@
         (fn [[remaining-lines idx]]
           [(->> remaining-lines
                 (group-by #(nth % idx))
-                (sort-by key)
-                (map second)
-                (sort-by count)
+                vals
+                sort
                 ((case which
                    :co2-scrubber first
                    :oxygen-generator last)))
