@@ -33,7 +33,6 @@
 
 (def input example-input)
 
-
 (let [[draws & cards] (str/split input #"\R\R")]
   (def draws (parse-num-line draws))
   (def initial-cards
