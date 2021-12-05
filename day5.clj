@@ -26,12 +26,11 @@
        (format "[%s]")
        read-string
        (partition 5)
-       (map (fn [[x0 y0 _ x1 y1]]
-              (when (or include-diagonals? (= x0 x1) (= y0 y1))
-                (map vector
-                     (range-including x0 x1)
-                     (range-including y0 y1)))))
-       (apply concat)
+       (mapcat (fn [[x0 y0 _ x1 y1]]
+                 (when (or include-diagonals? (= x0 x1) (= y0 y1))
+                   (map vector
+                        (range-including x0 x1)
+                        (range-including y0 y1)))))
        frequencies
        vals
        (filter #(> % 1))
