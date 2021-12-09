@@ -48,4 +48,4 @@
                  (conj visited p)
                  (inc sz)))))))
 
-(apply * (->> low-points (map butlast) (map get-basin-size) sort reverse (take 3)))
+(->> low-points (map butlast) (map get-basin-size) (sort >) (take 3) (reduce *))
