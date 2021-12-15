@@ -40,7 +40,6 @@
                              :let [cost' (+ cost (pos-cost pos'))]]
                          [{:pos pos' :cost cost'} (+ cost' (h pos'))]))})))
 
-(-> initial-search-state :frontier peek)
 (defn solution []
   (->> initial-search-state
        (iterate step)
