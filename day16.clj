@@ -46,6 +46,7 @@
     (let [version (subbit-val bits 0 3)
           ptype (packet-type bits)]
       (if (= ptype 4)
+        ;; literal
         (let [end-idx (->> (range 6 ##Inf 5)
                            (drop-while #(= (nth bits %) \1))
                            second)]
@@ -58,6 +59,7 @@
                         read-string)}
            (subs bits end-idx)])
         (if (= (nth bits 6) \0)
+          ;; operand length in bits
           (let [length (subbit-val bits 7 22)
                 end (+ 22 length)]
             [{:version version
@@ -69,6 +71,7 @@
                              (map first)
                              (take-while some?))}
              (subs bits end)])
+          ;; operand length in packets
           (let [npackets (subbit-val bits 7 18)
                 [operands remaining]
                 (->> [nil (subs bits 18)]
