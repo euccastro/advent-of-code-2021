@@ -46,9 +46,11 @@
                   (+ vx (compare 0 vx))
                   (dec vy)))))
 
-(reduce
- +
- (for [vx (abs-range farthest-x)
-       vy (abs-range farthest-y)
-       :when (hits-target? vx vy)]
-   1))
+(def solutions
+  (for [vx (abs-range farthest-x)
+        vy (abs-range farthest-y)
+        :when (hits-target? vx vy)]
+    [vx vy]))
+
+(count solutions)
+;; => 112
