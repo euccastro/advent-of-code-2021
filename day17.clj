@@ -33,23 +33,21 @@
        (apply range)))
 
 (defn hits-target?
-  ([vx vy]
-   (hits-target? 0 0 vx vy))
-  ([x y vx vy]
-   (cond
-     (and (<= xmin x xmax) (<= ymin y ymax)) true
-     (or (< y ymin)
-         (and (not (neg? vx)) (> x xmax))
-         (and (not (pos? vx)) (< x xmin))) false
-     :else (recur (+ x vx)
-                  (+ y vy)
-                  (+ vx (compare 0 vx))
-                  (dec vy)))))
+  [x y vx vy]
+  (cond
+    (and (<= xmin x xmax) (<= ymin y ymax)) true
+    (or (< y ymin)
+        (and (not (neg? vx)) (> x xmax))
+        (and (not (pos? vx)) (< x xmin))) false
+    :else (recur (+ x vx)
+                 (+ y vy)
+                 (+ vx (compare 0 vx))
+                 (dec vy))))
 
 (def solutions
   (for [vx (abs-range farthest-x)
         vy (abs-range farthest-y)
-        :when (hits-target? vx vy)]
+        :when (hits-target? 0 0 vx vy)]
     [vx vy]))
 
 (count solutions)
