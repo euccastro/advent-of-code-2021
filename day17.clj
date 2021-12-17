@@ -28,7 +28,7 @@
 
 (def solutions
   (for [vx (range (inc xmax))
-        vy (range ymin (inc (- ymin)))
+        vy (range ymin (- ymin))
         :when (hits-target? 0 0 vx vy)]
     [vx vy]))
 
