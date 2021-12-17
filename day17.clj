@@ -11,42 +11,24 @@
 (defn sum-to [n]
   (/ (* n (inc n)) 2))
 
-(defn abs [x]
-  (Math/abs x))
-
-(def farthest-y
-  (max-key abs ymin ymax))
-
-(sum-to (cond-> (abs farthest-y)
-          (neg? farthest-y) dec))
+(sum-to (dec (- ymin)))
 ;; => 45
 
 ;; part 2
-
-(def farthest-x
-  (max-key abs xmin xmax))
-
-(defn abs-range [x]
-  (->> x
-       abs
-       ((juxt - inc))
-       (apply range)))
 
 (defn hits-target?
   [x y vx vy]
   (cond
     (and (<= xmin x xmax) (<= ymin y ymax)) true
-    (or (< y ymin)
-        (and (not (neg? vx)) (> x xmax))
-        (and (not (pos? vx)) (< x xmin))) false
+    (or (< y ymin) (> x xmax)) false
     :else (recur (+ x vx)
                  (+ y vy)
                  (+ vx (compare 0 vx))
                  (dec vy))))
 
 (def solutions
-  (for [vx (abs-range farthest-x)
-        vy (abs-range farthest-y)
+  (for [vx (range (inc xmax))
+        vy (range ymin (inc (- ymin)))
         :when (hits-target? 0 0 vx vy)]
     [vx vy]))
 
